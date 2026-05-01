@@ -34,7 +34,7 @@ export const initializePayment = async (req, res, next) => {
         throw error;
     }
     // Users should only be able to pay for themselves
-    if (req.body.publicId && req.body.publicId !== loggedinUser.publicId) {
+    if (req.body.publicId !== loggedinUser.publicId) {
         const error = new Error('Unauthorized');
         error.statusCode = 403;
         throw error;

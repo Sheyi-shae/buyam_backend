@@ -168,6 +168,7 @@ model ProductReview {
 model UserReview {
   id        Int                 @id @default(autoincrement())
   userId    Int
+  publicId  String
   name      String
   ratings   Float?              @default(0)
   comment   String?
@@ -203,18 +204,31 @@ model userReviewLikes {
   @@unique([reviewId, userId]) // prevents duplicate likes
 }
 
-//
+//payment
+model Payment {
+  id        Int    @id @default(autoincrement())
+  reference String @unique
+  userId    Int
+  amount    Int
+
+  channel   String?
+  status    String
+  purpose   String?
+  createdAt DateTime @default(now())
+}
+
 // CHAT SYSTEM
 //
 model Conversation {
-  id            Int       @id @default(autoincrement())
-  productId     Int
-  buyerId       Int
-  lastMessage   String?
-  lastMessageAt DateTime?
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-  sellerId      Int
+  id                  Int       @id @default(autoincrement())
+  productId           Int
+  buyerId             Int
+  lastMessage         String?
+  lastMessageAt       DateTime?
+  lastMessageSenderId Int
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+  sellerId            Int
 
   product  Product   @relation(fields: [productId], onDelete: Cascade, references: [id])
   buyer    User      @relation("Buyer", fields: [buyerId], onDelete: Cascade, references: [id])

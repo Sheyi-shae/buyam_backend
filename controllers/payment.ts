@@ -42,7 +42,7 @@ if (!loggedinUser) {
   }
 
 // Users should only be able to pay for themselves
-if (req.body.publicId && req.body.publicId !== loggedinUser.publicId) {
+if (req.body.publicId  !== loggedinUser.publicId) {
   const error = new Error('Unauthorized') as CustomError;
                error.statusCode = 403;
                throw error;
