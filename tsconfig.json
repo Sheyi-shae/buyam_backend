@@ -8,8 +8,10 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "strict": true,
-    "outDir": "dist"
+    "outDir": "dist",
+     //"outDir": "./dist",
+   
   },
-  "include": ["index.ts", "types/**/*.d.ts", "**/*.ts", "libs/redis.js"]
+  "include": ["**/*.ts"]
 
 }
