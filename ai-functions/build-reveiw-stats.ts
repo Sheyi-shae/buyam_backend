@@ -1,12 +1,25 @@
-export function buildReviewStats(reviews:any[]) {
-  const positives = [];
-  const complaints = [];
+type PositiveKeyword =
+  | "fast delivery"
+  | "original product"
+  | "good seller";
+
+type ComplaintKeyword =
+  | "late delivery"
+  | "no response";
+
+type DeliveryFeedback = "positive" | "mixed" | "mostly negative" | "no reviews";
+
+export function buildReviewStats(reviews: any[]) {
+  const positives: PositiveKeyword[] = [];
+  const complaints: ComplaintKeyword[] = [];
   let deliveryIssues = 0;
 
-  if(reviews.length === 0) return {
-    topKeywords: [],
-    commonComplaints: [],
-    deliveryFeedback: "no reviews"
+  if (reviews.length === 0) {
+    return {
+      topKeywords: [],
+      commonComplaints: [],
+      deliveryFeedback: "no reviews" as DeliveryFeedback
+    };
   }
 
   for (const review of reviews) {

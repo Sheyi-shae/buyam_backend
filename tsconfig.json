@@ -9,7 +9,8 @@
     "skipLibCheck": true,
     "strict": true,
     "outDir": "dist",
-    "noImplicitAny": false
+    "noImplicitAny": false,
+    "types": ["node", "express", "multer"]
      //"outDir": "./dist",
    
   },

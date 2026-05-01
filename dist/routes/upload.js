@@ -12,7 +12,7 @@ uploadRouter.post("/", requireAdmin, upload.single("file"), (req, res, next) => 
         res.status(200).json({
             success: true,
             message: "File uploaded successfully",
-            url: file.path, // Cloudinary returns the image URL 
+            url: file.path, // returns the image URL 
         });
     }
     catch (error) {
@@ -30,7 +30,7 @@ uploadRouter.post("/public", authMiddleware, upload.single("file"), (req, res, n
         res.status(200).json({
             success: true,
             message: "File uploaded successfully",
-            url: file.path, // Cloudinary returns the image URL 
+            url: file.path, // returns the image URL 
         });
     }
     catch (error) {

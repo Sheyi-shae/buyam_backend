@@ -30,6 +30,10 @@ interface MessageUpdate {
   content: string;
 }
 
+interface SocketData {
+  tempMessageMap?: Record<string, number>;
+}
+
 export default function chatSocket(io: Server) {
   io.on("connection", (socket: Socket) => {
     console.log("User connected:", socket.id);
@@ -90,7 +94,7 @@ export default function chatSocket(io: Server) {
           data: {
             conversationId: conversation.id,
             senderId,
-            content: isUploading ? content : content, // Keep user's text, don't replace with "Uploading..."
+            content, 
             type: type || "text",
             avatar: avatar || null,
           },
@@ -244,7 +248,7 @@ export default function chatSocket(io: Server) {
 
     /** --- Handle disconnect --- */
     socket.on("disconnect", async() => {
-       let disconnectedUserId = null;
+     let disconnectedUserId: number | null = null;
 
       
 

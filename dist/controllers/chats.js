@@ -56,7 +56,7 @@ export default function chatSocket(io) {
                     data: {
                         conversationId: conversation.id,
                         senderId,
-                        content: isUploading ? content : content, // Keep user's text, don't replace with "Uploading..."
+                        content,
                         type: type || "text",
                         avatar: avatar || null,
                     },

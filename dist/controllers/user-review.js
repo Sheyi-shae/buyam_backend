@@ -53,7 +53,6 @@ export const submitUserReview = async (req, res, next) => {
 export const submitReviewReply = async (req, res, next) => {
     const { publicId } = req.params;
     const { reply, reviewId, name } = req.body;
-    console.log(reply, reviewId, name);
     try {
         if (!reply) {
             const error = new Error('Invalid review reply');

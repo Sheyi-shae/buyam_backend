@@ -2,12 +2,13 @@ export function buildReviewStats(reviews) {
     const positives = [];
     const complaints = [];
     let deliveryIssues = 0;
-    if (reviews.length === 0)
+    if (reviews.length === 0) {
         return {
             topKeywords: [],
             commonComplaints: [],
             deliveryFeedback: "no reviews"
         };
+    }
     for (const review of reviews) {
         const text = review.comment.toLowerCase();
         if (text.includes("delivery")) {
