@@ -3,13 +3,11 @@
   "name": "server",
   "version": "1.0.0",
   "main": "index.ts",
-  
-  
   "scripts": {
-  "dev": "nodemon --exec tsx index.ts",
-  "build": "tsc && npx prisma generate",
-  "start": "node dist/index.js"
-},
+    "dev": "nodemon --exec tsx index.ts",
+    "build": "tsc && npx prisma generate",
+    "start": "node dist/index.js"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -40,11 +38,11 @@
     "socket.io": "^4.8.1"
   },
   "devDependencies": {
-    "@types/cookie-parser": "^1.4.9",
+    "@types/cookie-parser": "^1.4.10",
     "@types/cors": "^2.8.19",
-    "@types/express": "^5.0.3",
+    "@types/express": "^5.0.6",
     "@types/jsonwebtoken": "^9.0.10",
-    "@types/multer": "^2.0.0",
+    "@types/multer": "^2.1.0",
     "@types/node": "^24.7.0",
     "@types/passport": "^1.0.17",
     "@types/passport-google-oauth20": "^2.0.17",

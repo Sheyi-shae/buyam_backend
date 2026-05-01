@@ -61,7 +61,7 @@ export const submitUserReview = async (req: Request, res: Response, next: NextFu
 export const submitReviewReply = async (req: Request, res: Response, next: NextFunction) => {
     const { publicId } = req.params;
     const { reply, reviewId, name } = req.body;
-    console.log(reply, reviewId, name);
+    
     try {
         if (!reply) {
             const error = new Error('Invalid review reply') as CustomError;
