@@ -48,7 +48,7 @@ var __importStar = (this && this.__importStar) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.NullsOrder = exports.QueryMode = exports.SortOrder = exports.MessageScalarFieldEnum = exports.ConversationScalarFieldEnum = exports.UserReviewScalarFieldEnum = exports.ProductReviewScalarFieldEnum = exports.ProductLikeScalarFieldEnum = exports.ProductScalarFieldEnum = exports.SubCategoryScalarFieldEnum = exports.CategoryScalarFieldEnum = exports.UserScalarFieldEnum = exports.TransactionIsolationLevel = exports.ModelName = exports.AnyNull = exports.JsonNull = exports.DbNull = exports.NullTypes = exports.Decimal = void 0;
+exports.NullsOrder = exports.QueryMode = exports.SortOrder = exports.MessageScalarFieldEnum = exports.ConversationScalarFieldEnum = exports.PaymentScalarFieldEnum = exports.UserReviewLikesScalarFieldEnum = exports.UserReviewRepliesScalarFieldEnum = exports.UserReviewScalarFieldEnum = exports.ProductReviewScalarFieldEnum = exports.ProductLikeScalarFieldEnum = exports.ProductViewScalarFieldEnum = exports.ProductScalarFieldEnum = exports.SubCategoryScalarFieldEnum = exports.CategoryScalarFieldEnum = exports.SessionScalarFieldEnum = exports.UserScalarFieldEnum = exports.TransactionIsolationLevel = exports.ModelName = exports.AnyNull = exports.JsonNull = exports.DbNull = exports.NullTypes = exports.Decimal = void 0;
 const runtime = __importStar(require("@prisma/client/runtime/index-browser"));
 exports.Decimal = runtime.Decimal;
 exports.NullTypes = {
@@ -76,12 +76,17 @@ exports.JsonNull = runtime.JsonNull;
 exports.AnyNull = runtime.AnyNull;
 exports.ModelName = {
     User: 'User',
+    Session: 'Session',
     Category: 'Category',
     SubCategory: 'SubCategory',
     Product: 'Product',
+    ProductView: 'ProductView',
     ProductLike: 'ProductLike',
     ProductReview: 'ProductReview',
     UserReview: 'UserReview',
+    userReviewReplies: 'userReviewReplies',
+    userReviewLikes: 'userReviewLikes',
+    Payment: 'Payment',
     Conversation: 'Conversation',
     Message: 'Message'
 };
@@ -98,13 +103,29 @@ exports.UserScalarFieldEnum = {
     id: 'id',
     googleId: 'googleId',
     email: 'email',
+    publicId: 'publicId',
     name: 'name',
     avatar: 'avatar',
     address: 'address',
+    online: 'online',
+    verifiedSeller: 'verifiedSeller',
+    lastSeen: 'lastSeen',
     phone: 'phone',
+    storeName: 'storeName',
+    storeDescription: 'storeDescription',
     role: 'role',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
+};
+exports.SessionScalarFieldEnum = {
+    id: 'id',
+    userId: 'userId',
+    tokenHash: 'tokenHash',
+    expiresAt: 'expiresAt',
+    revoked: 'revoked',
+    ipAddress: 'ipAddress',
+    userAgent: 'userAgent',
+    createdAt: 'createdAt'
 };
 exports.CategoryScalarFieldEnum = {
     id: 'id',
@@ -136,13 +157,22 @@ exports.ProductScalarFieldEnum = {
     isSold: 'isSold',
     slug: 'slug',
     sellerId: 'sellerId',
+    sellerPublicId: 'sellerPublicId',
     state: 'state',
     city: 'city',
     subCategoryId: 'subCategoryId',
     categoryId: 'categoryId',
     condition: 'condition',
     createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
+    updatedAt: 'updatedAt',
+    views: 'views'
+};
+exports.ProductViewScalarFieldEnum = {
+    id: 'id',
+    productId: 'productId',
+    userId: 'userId',
+    ipAddress: 'ipAddress',
+    createdAt: 'createdAt'
 };
 exports.ProductLikeScalarFieldEnum = {
     id: 'id',
@@ -163,11 +193,37 @@ exports.ProductReviewScalarFieldEnum = {
 exports.UserReviewScalarFieldEnum = {
     id: 'id',
     userId: 'userId',
+    publicId: 'publicId',
     name: 'name',
     ratings: 'ratings',
     comment: 'comment',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
+};
+exports.UserReviewRepliesScalarFieldEnum = {
+    id: 'id',
+    reply: 'reply',
+    reviewId: 'reviewId',
+    name: 'name',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+};
+exports.UserReviewLikesScalarFieldEnum = {
+    id: 'id',
+    reviewId: 'reviewId',
+    userId: 'userId',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+};
+exports.PaymentScalarFieldEnum = {
+    id: 'id',
+    reference: 'reference',
+    userId: 'userId',
+    amount: 'amount',
+    channel: 'channel',
+    status: 'status',
+    purpose: 'purpose',
+    createdAt: 'createdAt'
 };
 exports.ConversationScalarFieldEnum = {
     id: 'id',
@@ -175,6 +231,7 @@ exports.ConversationScalarFieldEnum = {
     buyerId: 'buyerId',
     lastMessage: 'lastMessage',
     lastMessageAt: 'lastMessageAt',
+    lastMessageSenderId: 'lastMessageSenderId',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
     sellerId: 'sellerId'
