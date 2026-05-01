@@ -18,3 +18,16 @@ export interface Message {
   type?: string;
   avatar?: string;
   }
+
+  declare namespace Express {
+  namespace Multer {
+    interface File {
+      fieldname: string;
+      originalname: string;
+      encoding: string;
+      mimetype: string;
+      size: number;
+      path?: string;
+    }
+  }
+}

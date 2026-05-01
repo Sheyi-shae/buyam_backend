@@ -10,7 +10,7 @@
     "strict": true,
     "outDir": "dist",
     "noImplicitAny": false,
-    "types": ["node", "express", "multer"]
+ 
      //"outDir": "./dist",
    
   },
