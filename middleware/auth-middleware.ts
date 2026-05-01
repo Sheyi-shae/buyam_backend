@@ -73,7 +73,7 @@ export const authMiddleware = async (
       throw createError(ERROR_MESSAGES.INVALID_TOKEN, HTTP_STATUS.UNAUTHORIZED);
     }
       const user = await db.user.findUnique({
-      where: { id: decoded.sub },
+      where: { id: Number(decoded.sub)  },
       select: {
         id: true,
         email: true,
