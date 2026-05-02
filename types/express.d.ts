@@ -1,22 +1,18 @@
-import { Prisma } from "@prisma/client";
-
-export type AuthenticatedUser = Prisma.UserGetPayload<{
-  select: {
-    id: true;
-    email: true;
-    name: true;
-    avatar: true;
-    role: true;
-    publicId: true;
-  };
-}>;
+import { JwtPayload } from "jsonwebtoken";
 
 declare global {
   namespace Express {
     interface Request {
-      user?: AuthenticatedUser;
+      user?: string | JwtPayload | Record<string, any>;
+    }
+    interface User {
+      id: number;
+      sub:number
+      name: string;
+      email: string;
+      avatar: string;
+      role:string
+      publicId:string
     }
   }
 }
-
-export {};
