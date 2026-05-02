@@ -5,15 +5,9 @@ import { TokenExpiredError, JsonWebTokenError } from "jsonwebtoken";
 
 import { CustomError } from "./error-middleware.js";
 import db from "../libs/db.js";
+import { AuthenticatedUser, MyJwtPayload } from "../types/express.js";
 
-export interface AuthenticatedUser {
-  id: number;
-  email: string | null;
-  name: string | null;
-  avatar: string | null;
-  publicId:string 
-  role: string;
-}
+
 // Extend Express Request to carry the hydrated user
 declare global {
   namespace Express {
@@ -68,7 +62,7 @@ export const authMiddleware = async (
       throw createError(ERROR_MESSAGES.NO_TOKEN, HTTP_STATUS.UNAUTHORIZED);
     }
 
-      const decoded = jwt.verify(token, process.env.JWT_SECRET!) as JwtPayload;
+      const decoded = jwt.verify(token, process.env.JWT_SECRET!) as MyJwtPayload;
        if (!decoded.sub) {
       throw createError(ERROR_MESSAGES.INVALID_TOKEN, HTTP_STATUS.UNAUTHORIZED);
     }

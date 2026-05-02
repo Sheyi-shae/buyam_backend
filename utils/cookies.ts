@@ -1,12 +1,15 @@
 import { Response } from "express";
 
 const isProd = process.env.NODE_ENV === "production";
-const ACCESS_TTL_MS = 1 * 60 * 1000;           // 15 minutes
+
+const ACCESS_TTL_MS = 15 * 60 * 1000; // 15 minutes
 const REFRESH_TTL_MS = 7 * 24 * 60 * 60 * 1000; // 7 days
 
-const baseCookieOptions = {
+const cookieOptions = {
   httpOnly: true,
   secure: isProd,
+  sameSite: isProd ? "none" : "lax",
+  path: "/",
 } as const;
 
 export function setAuthCookies(
@@ -14,32 +17,18 @@ export function setAuthCookies(
   accessToken: string,
   refreshToken: string
 ): void {
-
   res.cookie("accessToken", accessToken, {
-    ...baseCookieOptions,
-    sameSite: "lax",
-    path: "/",
+    ...cookieOptions,
     maxAge: ACCESS_TTL_MS,
   });
 
   res.cookie("refreshToken", refreshToken, {
-    ...baseCookieOptions,
-    sameSite: "strict",
-    path: "/",
+    ...cookieOptions,
     maxAge: REFRESH_TTL_MS,
   });
 }
 
 export function clearAuthCookies(res: Response): void {
-  res.clearCookie("accessToken", {
-    ...baseCookieOptions,
-    sameSite: "lax",
-    path: "/",
-  });
-
-  res.clearCookie("refreshToken", {
-    ...baseCookieOptions,
-    sameSite: "strict",
-    path: "/",
-  });
+  res.clearCookie("accessToken", cookieOptions);
+  res.clearCookie("refreshToken", cookieOptions);
 }
