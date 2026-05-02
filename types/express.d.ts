@@ -7,10 +7,10 @@ declare global {
     }
     interface User {
       id: number;
-      sub:number
-      name: string;
-      email: string;
-      avatar: string;
+      sub?:number
+      email: string | null;
+  name: string | null;
+  avatar: string | null;
       role:string
       publicId:string
     }

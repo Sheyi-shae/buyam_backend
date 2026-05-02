@@ -1,7 +1,5 @@
 import { Request, Response, NextFunction } from "express";
 import jwt, { JwtPayload } from "jsonwebtoken";
-import { TokenExpiredError, JsonWebTokenError } from "jsonwebtoken";
-
 
 import { CustomError } from "./error-middleware.js";
 import db from "../libs/db.js";
@@ -18,7 +16,7 @@ export interface AuthenticatedUser {
 declare global {
   namespace Express {
     interface Request {
-      user?: AuthenticatedUser;
+      user?:User;
     }
   }
 }
