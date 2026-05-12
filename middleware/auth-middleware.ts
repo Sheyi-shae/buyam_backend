@@ -83,11 +83,12 @@ export const authMiddleware = async (
       },
     });
 
+    
     if (!user) {
       throw createError(ERROR_MESSAGES.INVALID_USER, HTTP_STATUS.UNAUTHORIZED);
       }
     req.user = user;
-    console.log(user,"user")
+   
 
     next();
   } catch (error) {
