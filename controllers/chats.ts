@@ -252,7 +252,7 @@ export default function chatSocket(io: Server) {
     socket.on("disconnect", async () => {
       const userId = authenticatedUserId;
 
-      if (userId && activeUsers[userId]) {
+      if (userId && activeUsers[userId]) {  
         activeUsers[userId].delete(socket.id);
 
         // Only mark offline when the last socket for this user disconnects
