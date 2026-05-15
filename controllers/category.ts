@@ -49,57 +49,67 @@ export const createCategory = async (
 export const getAllCategories = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { search = "", page = "1", limit = "10", suggestions } = req.query;
-    const pageNumber = parseInt(page as string) || 1;
-    const pageSize = parseInt(limit as string) || 10;
+
+    const pageNumber = Math.max(Number(page) || 1, 1);
+    const pageSize = Math.max(Number(limit) || 10, 1);
     const skip = (pageNumber - 1) * pageSize;
 
+    const cleanSearch = (search as string).trim();
+
     const where: any = {};
-    if (search) {
+
+    if (cleanSearch) {
       where.OR = [
-        { name: { contains: search as string, mode: "insensitive" } },
-        { description: { contains: search as string, mode: "insensitive" } },
+        { name: { contains: cleanSearch, mode: "insensitive" } },
+        { description: { contains: cleanSearch, mode: "insensitive" } },
       ];
     }
 
+    // suggestions endpoint
     if (suggestions === "true") {
-      // return only top 5 names for suggestions
       const suggestionResults = await db.category.findMany({
         where,
-       include:{subcategories:true},
+        include: { subcategories: true },
         take: 5,
         orderBy: { name: "asc" },
       });
 
-        //console.log("search suggestions", suggestionResults)
-        return res.status(200).json({ success: true, data: suggestionResults });
+      return res.status(200).json({
+        success: true,
+        data: suggestionResults,
+      });
     }
 
-      
-    // Full search with pagination
     const total = await db.category.count({ where });
+
     const categories = await db.category.findMany({
       where,
-        include: {
-            subcategories: true,
-             products : {
-                include:
-                 {
-                     seller: true,
-                     likes: true,
-                     subCategory:true
-                 }
-            }
-            
+      include: {
+        subcategories: true,
+        products: {
+          where: { isSold: false },
+          take: 30,
+          include: {
+            seller: true,
+            likes: true,
+            subCategory: true,
+          },
         },
+      },
       skip,
       take: pageSize,
       orderBy: { name: "asc" },
     });
-     // console.log(categories)
+
+    // OPTIONAL: flatten products if you need a homepage feed
+    const flatProducts = categories
+      .flatMap((c) => c.products)
+      .sort(() => Math.random() - 0.5)
+      .slice(0, 10);
 
     return res.status(200).json({
       success: true,
-      message: "Categories fetched successfully",
+     // message: "Categories fetched successfully",
       data: categories,
       meta: {
         total,
@@ -107,6 +117,8 @@ export const getAllCategories = async (req: Request, res: Response, next: NextFu
         limit: pageSize,
         totalPages: Math.ceil(total / pageSize),
       },
+      // optional feed (only if frontend needs it)
+      feed: flatProducts,
     });
   } catch (error) {
     next(error);

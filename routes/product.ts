@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { createProduct, deleteProductBySlug, getProductBySlug, getProductsBySubCategorySlug, searchProducts, trackProductView, updateProductStatusBySlug } from '../controllers/product.js';
+import { createProduct, deleteProductBySlug, getProductBySlug, getProductsBySubCategorySlug, getSimilarProducts, searchProducts, trackProductView, updateProductStatusBySlug } from '../controllers/product.js';
 import { authMiddleware } from '../middleware/auth-middleware.js';
 import { aiProductChat } from '../controllers/ai-product-chat.js';
 
@@ -17,6 +17,8 @@ productRouter.get('/prodct-details/:slug', getProductBySlug);
 
 
 
+// similar product
+productRouter.get('/similar-product/:id',getSimilarProducts)
 // track product views
 productRouter.post('/view/:slug', trackProductView)
 
@@ -27,5 +29,6 @@ productRouter.post('/ai/product-chat', authMiddleware, aiProductChat)
 productRouter.put(`/update-status/:slug`, authMiddleware, updateProductStatusBySlug)
 // delete product by slug
 productRouter.delete('/delete/:slug', authMiddleware, deleteProductBySlug)
+
 
 export default productRouter;
