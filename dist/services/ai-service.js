@@ -41,7 +41,6 @@ Answer questions based only on this information, convert seller's last seen to a
         // userMessage.toLowerCase().includes('real') ||
         // userMessage.toLowerCase().includes('color') ||
         userMessage.toLowerCase().includes('colour'));
-        // Use vision model if images are available and question seems image-related
         if (hasImages && isImageRelatedQuestion) {
             const content = [
                 {

@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { createProduct, deleteProductBySlug, getProductBySlug, getProductsBySubCategorySlug, searchProducts, trackProductView, updateProductStatusBySlug } from '../controllers/product.js';
+import { createProduct, deleteProductBySlug, getProductBySlug, getProductsBySubCategorySlug, getSimilarProducts, searchProducts, trackProductView, updateProductStatusBySlug } from '../controllers/product.js';
 import { authMiddleware } from '../middleware/auth-middleware.js';
 import { aiProductChat } from '../controllers/ai-product-chat.js';
 const productRouter = Router();
@@ -10,6 +10,8 @@ productRouter.get('/all', searchProducts);
 productRouter.get('/subcategory/:slug', getProductsBySubCategorySlug);
 // get products by slug
 productRouter.get('/prodct-details/:slug', getProductBySlug);
+// similar product
+productRouter.get('/similar-product/:id', getSimilarProducts);
 // track product views
 productRouter.post('/view/:slug', trackProductView);
 // ai product chat

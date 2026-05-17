@@ -438,3 +438,81 @@ export const updateProductStatusBySlug = async (req, res, next) => {
         next(error);
     }
 };
+export const getSimilarProducts = async (req, res, next) => {
+    try {
+        const productId = Number(req.params.id);
+        if (!productId) {
+            return res.status(400).json({
+                success: false,
+                message: "Invalid product id",
+            });
+        }
+        // 1. Get current product
+        const currentProduct = await db.product.findUnique({
+            where: { id: productId },
+            select: {
+                id: true,
+                categoryId: true,
+                subCategoryId: true,
+                condition: true,
+                price: true,
+                city: true,
+            },
+        });
+        if (!currentProduct) {
+            return res.status(404).json({
+                success: false,
+                message: "Product not found",
+            });
+        }
+        // 2. Fetch candidate products
+        const candidates = await db.product.findMany({
+            where: {
+                isSold: false,
+                NOT: { id: productId },
+                categoryId: currentProduct.categoryId,
+            },
+            include: {
+                seller: true,
+                likes: true,
+                subCategory: true,
+            },
+            take: 50,
+        });
+        // 3. Scoring function
+        const scored = candidates.map((p) => {
+            let score = 0;
+            // same subcategory (strong boost)
+            if (p.subCategoryId === currentProduct.subCategoryId) {
+                score += 50;
+            }
+            // same condition
+            if (p.condition === currentProduct.condition) {
+                score += 15;
+            }
+            // same city
+            if (p.city === currentProduct.city) {
+                score += 10;
+            }
+            // price proximity (closer = better)
+            const priceDiff = Math.abs(p.price - currentProduct.price);
+            const priceScore = Math.max(0, 30 - priceDiff / 10000);
+            score += priceScore;
+            // engagement
+            score += p.likes.length * 2;
+            return { ...p, score };
+        });
+        // 4. Sort + return top results
+        const similarProducts = scored
+            .sort((a, b) => b.score - a.score)
+            .slice(0, 10);
+        return res.status(200).json({
+            success: true,
+            //message: "Similar products fetched successfully",
+            data: similarProducts,
+        });
+    }
+    catch (error) {
+        next(error);
+    }
+};
