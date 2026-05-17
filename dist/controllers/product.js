@@ -32,6 +32,7 @@ export const createProduct = async (req, res, next) => {
             error.statusCode = 404;
             throw error;
         }
+        console.log("negotiable", negotiable, typeof negotiable);
         // create product
         const product = await db.product.create({
             data: {

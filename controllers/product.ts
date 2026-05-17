@@ -59,7 +59,9 @@ export const createProduct = async (
             const error = new Error('Subcategory not found') as CustomError;
             error.statusCode = 404;
             throw error;
-        }
+      }
+      
+      console.log("negotiable", negotiable, typeof negotiable)
         
         // create product
         const product = await db.product.create({

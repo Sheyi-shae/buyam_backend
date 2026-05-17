@@ -85,7 +85,11 @@ export const getAllCategories = async (req: Request, res: Response, next: NextFu
     const categories = await db.category.findMany({
       where,
       include: {
-        subcategories: true,
+          subcategories: {
+              include: {
+                products: true,
+              }
+        },
         products: {
           where: { isSold: false },
           take: 30,

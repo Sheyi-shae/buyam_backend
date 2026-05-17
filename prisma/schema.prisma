@@ -92,7 +92,7 @@ model Product {
   avatar         String[]
   description    String
   isPremium      Boolean       @default(false)
-  negotiable     Boolean       @default(true)
+  negotiable     Boolean
   isSold         Boolean       @default(false)
   slug           String        @unique
   sellerId       Int

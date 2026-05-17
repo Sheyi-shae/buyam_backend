@@ -61,7 +61,11 @@ export const getAllCategories = async (req, res, next) => {
         const categories = await db.category.findMany({
             where,
             include: {
-                subcategories: true,
+                subcategories: {
+                    include: {
+                        products: true,
+                    }
+                },
                 products: {
                     where: { isSold: false },
                     take: 30,
