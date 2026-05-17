@@ -61,8 +61,10 @@ export const createProduct = async (
             throw error;
       }
       
-      console.log("negotiable", negotiable, typeof negotiable)
-        
+      //conver negotiable to boolean
+      const isNegotiable = negotiable === true || negotiable === 'true';
+      
+      
         // create product
         const product = await db.product.create({
           data: {
@@ -75,10 +77,12 @@ export const createProduct = async (
             sellerId,
             categoryId: Number(categoryId),
             subCategoryId: Number(subCategoryId),
-            condition, negotiable: Boolean(negotiable),
+            condition,
+            negotiable:isNegotiable,
             state, city
           } 
-                });
+        });
+      console.log("new product", product.negotiable)
          return res.status(201).json({
             success: true,
             message: 'product posted successfully',

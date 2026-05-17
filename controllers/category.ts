@@ -109,7 +109,7 @@ export const getAllCategories = async (req: Request, res: Response, next: NextFu
     const flatProducts = categories
       .flatMap((c) => c.products)
       .sort(() => Math.random() - 0.5)
-      .slice(0, 10);
+      .slice(0, 8);
 
     return res.status(200).json({
       success: true,
