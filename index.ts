@@ -61,7 +61,12 @@ chatSocket(io);
 app.use(passport.initialize());
 
 //routes
-
+app.get("/health", (req, res) => {
+  res.status(200).json({
+    status: "ok",
+    uptime: process.uptime(),
+  });
+});
 app.use('/api/auth', authRouter);
 app.use('/api/product', productRouter)
 app.use('/api/category', categoryRouter)
