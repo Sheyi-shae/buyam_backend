@@ -12,7 +12,7 @@ export const initializePayment = async (req:Request,res:Response,next:NextFuncti
     
 // Get the authenticated user's data
 const loggedinUser = await db.user.findUnique({ 
-  where: { id: userId } // or however you map sub to user
+  where: { id: userId } 
 });
 
 if (!loggedinUser) {

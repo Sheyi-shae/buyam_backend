@@ -7,6 +7,7 @@ const userRouter = Router();
 
 userRouter.get('/all', getAllUsers);
 userRouter.get('/vendor/:publicId', authMiddleware, getUserProfileByPublicId);
+userRouter.get('/vendor/public/:publicId',  getUserProfileByPublicId);
 userRouter.get('/me', authMiddleware, getLoggedInUserDetails);
 userRouter.patch('/phone', authMiddleware, updateUserPhone);
 userRouter.patch('/store/:id', authMiddleware, updateUserStore);

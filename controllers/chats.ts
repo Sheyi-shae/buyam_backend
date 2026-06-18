@@ -53,7 +53,7 @@ export default function chatSocket(io: Server) {
         return next(new Error("Invalid token payload"));
       }
 
-      // Store authenticated userId - this is now the source of truth
+     
       socket.data.userId = payload.sub;
       next();
     } catch (err) {
@@ -68,7 +68,7 @@ export default function chatSocket(io: Server) {
 
     /** --- Join --- */
     socket.on("join", async () => {
-      // Use authenticated userId from middleware, not from client
+     
       const userId = authenticatedUserId;
       
       if (!activeUsers[userId]) activeUsers[userId] = new Set();
